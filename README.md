@@ -21,6 +21,9 @@ An interactive chatbot-style application that helps students manage their study 
 ## 📽️ Demo
 <p align="center">
   <a href="https://youtu.be/uHSlPiwI9Ok" title="Study Planner Chatbot Demo">
+  <img src="static/img/Study-Planner-Chatbot.png" alt="Study Planner Demo" width="80%">
+  </a>
+  <br><em>Click the image to watch the full demo video on YouTube</em>
 </p>
 
 ## 🚀 Installation
