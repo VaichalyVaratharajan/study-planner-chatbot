@@ -26,7 +26,6 @@ An interactive chatbot-style application that helps students manage their study 
     <br>
     <img src="https://img.shields.io/badge/Watch%20on-YouTube-red?style=for-the-badge&logo=youtube" alt="Watch on YouTube">
   </a>
-  <br><em>Click to watch the full demo video on YouTube</em>
 </p>
 
 ## 🚀 Installation
