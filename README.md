@@ -18,16 +18,9 @@ An interactive chatbot-style application that helps students manage their study 
 - ⏱️ Get smart study schedule suggestions based on available time
 - 💾 Persistent storage of tasks using JSON
 
-## 📷 Screenshots
-
+## 📽️ Demo
 <p align="center">
-  <img src="screenshots/chat_interface.png" alt="Chat Interface" width="80%">
-  <br><em>The chatbot interface with task list display</em>
-</p>
-
-<p align="center">
-  <img src="screenshots/task_suggestions.png" alt="Task Suggestions" width="80%">
-  <br><em>Schedule suggestions based on available time</em>
+ [![Study Planner Demo](static\img\Study-Planner-Chatbot.png)](https://youtu.be/uHSlPiwI9Ok "Study Planner Chatbot Demo")
 </p>
 
 ## 🚀 Installation
