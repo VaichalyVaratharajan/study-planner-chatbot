@@ -1,0 +1,44 @@
+# 📚 Study Planner Chatbot
+
+![Study Planner Chatbot](https://img.shields.io/badge/Study-Planner-orange) ![License](https://img.shields.io/badge/License-MIT-blue) ![Python](https://img.shields.io/badge/Python-3.7+-brightgreen) ![Flask](https://img.shields.io/badge/Flask-2.0+-lightgrey)
+
+<p align="center">
+  <img src="static/img/bot2.png" alt="Study Planner Logo" width="200">
+</p>
+
+An interactive chatbot-style application that helps students manage their study tasks, track progress, and optimize their study schedule.
+
+## ✨ Features
+
+- 💬 Intuitive chat interface for task management
+- 📝 Add new study tasks with subject, description, and due dates
+- ✅ Mark tasks as completed
+- 📅 View today's study schedule
+- 📋 Track pending tasks
+- ⏱️ Get smart study schedule suggestions based on available time
+- 💾 Persistent storage of tasks using JSON
+
+## 📷 Screenshots
+
+<p align="center">
+  <img src="screenshots/chat_interface.png" alt="Chat Interface" width="80%">
+  <br><em>The chatbot interface with task list display</em>
+</p>
+
+<p align="center">
+  <img src="screenshots/task_suggestions.png" alt="Task Suggestions" width="80%">
+  <br><em>Schedule suggestions based on available time</em>
+</p>
+
+## 🚀 Installation
+
+### Prerequisites
+
+- Python 3.7 or higher
+- pip (Python package installer)
+
+### Step 1: Clone the repository
+
+```bash
+git clone https://github.com/your-username/study-planner-chatbot.git
+cd study-planner-chatbot
