@@ -19,10 +19,16 @@ An interactive chatbot-style application that helps students manage their study 
 - 💾 Persistent storage of tasks using JSON
 
 ## 📽️ Demo
-
-
+## 📽️ Demo
 <p align="center">
-  [![Study Planner Demo](static/img/Study-Planner-Chatbot.png)](https://youtu.be/uHSlPiwI9Ok "Study Planner Chatbot Demo")
+  <a href="https://youtu.be/uHSlPiwI9Ok" title="Study Planner Chatbot Demo">
+    <div style="position: relative; display: inline-block;">
+      <img src="static/img/Study-Planner-Chatbot.png" alt="Study Planner Demo" width="80%">
+      <div style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/thumb/0/09/YouTube_full-color_icon_%282017%29.svg/1024px-YouTube_full-color_icon_%282017%29.svg.png" width="60" alt="YouTube" style="opacity: 0.8;">
+      </div>
+    </div>
+  </a>
   <br><em>Click the image to watch the full demo video on YouTube</em>
 </p>
 
