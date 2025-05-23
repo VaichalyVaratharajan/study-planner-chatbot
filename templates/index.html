@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Study Planner Chatbot</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/styles.css') }}">
+  <link rel="icon" type="image/png" href="{{ url_for('static', filename='img/chatbot.png') }}">
+
+
+</head>
+<body>
+  <h1><span class="bot-icon"><img src="{{ url_for('static', filename='img/bot2.png') }}" alt="Chatbot Icon"></span>Study Planner Chatbot</h1>
+  
+  <!-- Chat UI -->
+  <div class="chat-container" id="chat-container">
+    <!-- Only welcome message at first -->
+    <div class="message bot-message welcome-msg">
+      <p>👋 Hi there! I'm your Study Planner Assistant. How can I help you today?</p>
+    </div>
+    
+    <!-- User messages will be displayed here within the session -->
+    <div id="session-messages"></div>
+    
+    {% if command_result %}
+      <div class="message bot-message" id="server-response">
+        <div class="response-section">
+          <p>{{ command_result }}</p>
+        </div>
+        {% if help_commands %}
+        <div class="response-section">
+          <h3>Available Commands:</h3>
+          <table class="task-table">
+            <tr>
+              <th>Command</th>
+              <th>Description</th>
+            </tr>
+            {% for cmd in help_commands %}
+            <tr>
+              <td><code>{{ cmd.command }}</code></td>
+              <td>{{ cmd.description }}</td>
+            </tr>
+            {% endfor %}
+          </table>
+        </div>
+      {% endif %}
+        {% if 'Found' in command_result and 'today' in command_result %}
+          {% if today_tasks %}
+            <div class="response-section">
+              <h3>Today's Tasks:</h3>
+              <table class="task-table">
+                <tr>
+                  <th>ID</th>
+                  <th>Subject</th>
+                  <th>Task</th>
+                  <th>Time</th>
+                  <th>Status</th>
+                </tr>
+                {% for task in today_tasks %}
+                <tr class="{% if task.status == 'completed' %}completed{% endif %}">
+                  <td>{{ task.id }}</td>
+                  <td>{{ task.subject }}</td>
+                  <td>{{ task.task }}</td>
+                  <td>{{ task.estimated_time }}</td>
+                  <td>{{ task.status }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          {% else %}
+            <div class="response-section">
+              <h3>Today's Tasks:</h3>
+              <p>No tasks scheduled for today.</p>
+            </div>
+          {% endif %}
+        {% endif %}
+        
+        {% if 'Found' in command_result and 'pending' in command_result %}
+          {% if pending_tasks %}
+            <div class="response-section">
+              <h3>Pending Tasks:</h3>
+              <table class="task-table">
+                <tr>
+                  <th>ID</th>
+                  <th>Subject</th>
+                  <th>Task</th>
+                  <th>Due Date</th>
+                  <th>Est. Time</th>
+                </tr>
+                {% for task in pending_tasks %}
+                <tr>
+                  <td>{{ task.id }}</td>
+                  <td>{{ task.subject }}</td>
+                  <td>{{ task.task }}</td>
+                  <td>{{ task.due_date }}</td>
+                  <td>{{ task.estimated_time }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          {% else %}
+            <div class="response-section">
+              <h3>Pending Tasks:</h3>
+              <p>No pending tasks. Good job!</p>
+            </div>
+          {% endif %}
+        {% endif %}
+        
+        {% if 'Suggested' in command_result %}
+          {% if suggested_schedule %}
+            <div class="response-section">
+              <h3>Suggested Schedule ({{ remaining_time }}h remaining):</h3>
+              <table class="task-table">
+                <tr>
+                  <th>ID</th>
+                  <th>Subject</th>
+                  <th>Task</th>
+                  <th>Time</th>
+                </tr>
+                {% for task in suggested_schedule %}
+                <tr>
+                  <td>{{ task.id }}</td>
+                  <td>{{ task.subject }}</td>
+                  <td>{{ task.task }}</td>
+                  <td>{{ task.estimated_time }}</td>
+                </tr>
+                {% endfor %}
+              </table>
+            </div>
+          {% else %}
+            <div class="response-section">
+              <h3>Suggested Schedule:</h3>
+              <p>I couldn't find suitable tasks for your time slot.</p>
+            </div>
+          {% endif %}
+        {% endif %}
+        
+      </div>
+    {% endif %}
+  </div>
+  
+  <!-- Command input styled as chat input -->
+  <div class="input-area">
+    <form method="POST" id="chat-form">
+      <input type="text" name="input" id="chat-input" placeholder="Type a command..." required autofocus/>
+      <button type="submit">Send</button>
+    </form>
+  </div>
+
+  {% raw %}
+  <script>
+    // Chat functionality
+    const chatForm = document.getElementById('chat-form');
+    const chatInput = document.getElementById('chat-input');
+    const chatContainer = document.getElementById('chat-container');
+    const sessionMessages = document.getElementById('session-messages');
+    
+   
+    
+    // Format command highlights
+    function formatHighlights(text) {
+      const keywords = ['add', 'list', 'find', 'mark', 'suggest', 'help', 'today', 'pending', 'completed'];
+      keywords.forEach(keyword => {
+        const regex = new RegExp(`\\b${keyword}\\b`, 'gi');
+        text = text.replace(regex, match => `<span class="highlight">${match}</span>`);
+      });
+      return text;
+    }
+    
+    // Function to add a message to the chat
+    function addMessage(message, isUser = false) {
+      const messageDiv = document.createElement('div');
+      messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+      
+      if (isUser) {
+        // For user messages, simple format
+        messageDiv.innerHTML = `<p>${message}</p>`;
+      } else {
+        // For bot messages, just apply highlighting for now
+        // The server response will handle the table formatting
+        messageDiv.innerHTML = `<div class="response-section"><p>${formatHighlights(message)}</p></div>`;
+      }
+      
+      // Add timestamp for all messages
+      const timestampP = document.createElement('p');
+      
+      
+      // Store in session storage for the current session only
+      const messages = JSON.parse(sessionStorage.getItem('currentSessionMessages') || '[]');
+      messages.push({
+        text: message,
+        isUser: isUser,
+        // Store the full HTML for server responses with tables
+        html: !isUser && message.includes('task-table') ? messageDiv.innerHTML : null
+      });
+      sessionStorage.setItem('currentSessionMessages', JSON.stringify(messages));
+      
+      // Scroll to bottom of chat
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    // Function to load messages from the current session
+    function loadSessionMessages() {
+      const messages = JSON.parse(sessionStorage.getItem('currentSessionMessages') || '[]');
+      
+      // Clear existing session messages
+      sessionMessages.innerHTML = '';
+      
+      // Add each message to the chat
+      messages.forEach(msg => {
+        const messageDiv = document.createElement('div');
+        messageDiv.className = `message ${msg.isUser ? 'user-message' : 'bot-message'}`;
+        
+        if (msg.isUser) {
+          // Simple format for user messages
+          messageDiv.innerHTML = `<p>${msg.text}</p>`;
+        } else if (msg.html) {
+          // Use stored HTML for responses that already have tables
+          messageDiv.innerHTML = msg.html;
+        } else {
+          // Apply basic formatting for other bot messages
+          messageDiv.innerHTML = `<div class="response-section"><p>${formatHighlights(msg.text)}</p></div>`;
+        }
+        
+        // Add timestamp if not already present
+        if (!messageDiv.querySelector('.timestamp')) {
+          const timestampP = document.createElement('p');
+        }
+        
+        sessionMessages.appendChild(messageDiv);
+      });
+      
+      // Scroll to bottom of chat
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+    }
+    
+    // Add user message to chat when form is submitted
+    chatForm.addEventListener('submit', function(e) {
+      const userMessage = chatInput.value.trim();
+      if (userMessage) {
+        addMessage(userMessage, true);
+        
+        // Add a temporary "thinking" message that will be replaced when the page reloads
+        const thinkingDiv = document.createElement('div');
+        thinkingDiv.className = 'message bot-message thinking-msg';
+        thinkingDiv.innerHTML = '<p class="bot-thinking">Thinking...</p>';
+        sessionMessages.appendChild(thinkingDiv);
+        
+        // Scroll to bottom of chat
+        chatContainer.scrollTop = chatContainer.scrollHeight;
+      }
+    });
+    
+    // Function to handle server response
+    function handleServerResponse() {
+      const serverResponse = document.getElementById('server-response');
+      if (serverResponse) {
+        // Remove any thinking messages
+        const thinkingMsgs = document.querySelectorAll('.thinking-msg');
+        thinkingMsgs.forEach(msg => msg.remove());
+        
+        // Clone the server response
+        const clonedResponse = serverResponse.cloneNode(true);
+        
+        // Store the HTML in session storage
+        const messages = JSON.parse(sessionStorage.getItem('currentSessionMessages') || '[]');
+        messages.push({
+          text: serverResponse.textContent.trim(),
+          isUser: false,
+          html: serverResponse.innerHTML // Store the full HTML
+        });
+        sessionStorage.setItem('currentSessionMessages', JSON.stringify(messages));
+        
+        // Add the cloned response to the session messages
+        clonedResponse.id = ''; // Remove the id to avoid duplicates
+        sessionMessages.appendChild(clonedResponse);
+        
+        // Remove the original server response element
+        serverResponse.remove();
+      }
+    }
+    
+    // Initialize the chat interface on page load
+    window.onload = function() {
+      // Check if this is a form submission or a page refresh
+      const isFormSubmission = sessionStorage.getItem('formSubmitted') === 'true';
+      
+      if (!isFormSubmission) {
+        // This is a page refresh, clear the session storage
+        sessionStorage.clear();
+      } else {
+        // Reset the form submission flag
+        sessionStorage.removeItem('formSubmitted');
+        
+        // Handle server response if present
+        handleServerResponse();
+      }
+      
+      // Load any messages from the current session
+      loadSessionMessages();
+      
+      // Scroll to bottom of chat
+      chatContainer.scrollTop = chatContainer.scrollHeight;
+      
+      // Focus on input field
+      document.getElementById('chat-input').focus();
+    };
+    
+    // Set flag when form is submitted
+    chatForm.addEventListener('submit', function() {
+      sessionStorage.setItem('formSubmitted', 'true');
+    });
+    
+    // Clear session storage when page is refreshed or closed
+    window.addEventListener('beforeunload', function(e) {
+      // Only keep the session if this is a form submission
+      if (sessionStorage.getItem('formSubmitted') !== 'true') {
+        sessionStorage.clear();
+      }
+    });
+  </script>
+  {% endraw %}
+</body>
+</html>

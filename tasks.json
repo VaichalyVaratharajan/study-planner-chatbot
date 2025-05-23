@@ -1,0 +1,122 @@
+[
+  {
+    "id": 1,
+    "subject": "Biology",
+    "task": "Complete Chapter 3 exercises",
+    "due_date": "2025-05-24",
+    "estimated_time": "1h",
+    "status": "completed"
+  },
+  {
+    "id": 2,
+    "subject": "Mathematics",
+    "task": "Solve Chapter 3 problems",
+    "due_date": "2025-05-24",
+    "estimated_time": "1h",
+    "status": "completed"
+  },
+  {
+    "id": 3,
+    "subject": "Mathematics",
+    "task": "Review Chapter 3 concepts",
+    "due_date": "2025-05-23",
+    "estimated_time": "1h",
+    "status": "pending"
+  },
+  {
+    "id": 4,
+    "subject": "Biology",
+    "task": "Study Chapter 3 diagrams",
+    "due_date": "2025-05-24",
+    "estimated_time": "1h",
+    "status": "pending"
+  },
+  {
+    "id": 5,
+    "subject": "Mathematics",
+    "task": "Complete Chapter 3 quiz",
+    "due_date": "2025-05-23",
+    "estimated_time": "1h",
+    "status": "completed"
+  },
+  {
+    "id": 6,
+    "subject": "Biology",
+    "task": "Prepare Chapter 3 notes",
+    "due_date": "2025-05-24",
+    "estimated_time": "1h",
+    "status": "completed"
+  },
+  {
+    "id": 7,
+    "subject": "Chemistry",
+    "task": "Read Chapter 13",
+    "due_date": "2025-05-24",
+    "estimated_time": "1h",
+    "status": "pending"
+  },
+  {
+    "id": 8,
+    "subject": "Tamil",
+    "task": "Practice Chapter 23 vocabulary",
+    "due_date": "2025-05-29",
+    "estimated_time": "1h",
+    "status": "pending"
+  },
+  {
+    "id": 9,
+    "subject": "Biology",
+    "task": "Research topics from Chapter 7",
+    "due_date": "2025-05-24",
+    "estimated_time": "1h",
+    "status": "pending"
+  },
+  {
+    "id": 10,
+    "subject": "English",
+    "task": "Write essay on Chapter 12",
+    "due_date": "2025-05-27",
+    "estimated_time": "1h",
+    "status": "pending"
+  },
+  {
+    "id": 11,
+    "subject": "Biology",
+    "task": "Complete lab report for Chapter 3",
+    "due_date": "2025-05-24",
+    "estimated_time": "1h",
+    "status": "completed"
+  },
+  {
+    "id": 12,
+    "subject": "History",
+    "task": "Create timeline for Chapter 12",
+    "due_date": "2025-05-30",
+    "estimated_time": "1h",
+    "status": "completed"
+  },
+  {
+    "id": 13,
+    "subject": "Commerce",
+    "task": "Analyze case study from Chapter 3",
+    "due_date": "2025-05-28",
+    "estimated_time": "1h",
+    "status": "pending"
+  },
+  {
+    "id": 14,
+    "subject": "english",
+    "task": "writing essay",
+    "due_date": "2025-05-2027",
+    "estimated_time": "1h",
+    "status": "pending"
+  },
+  {
+    "id": 15,
+    "subject": "english",
+    "task": "literature",
+    "due_date": "2025-05-25",
+    "estimated_time": "1h",
+    "status": "pending"
+  }
+]

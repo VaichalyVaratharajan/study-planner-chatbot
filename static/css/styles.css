@@ -1,0 +1,326 @@
+ @import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@700;800;900&family=Roboto:wght@400;500;700&display=swap');
+
+    /* New Theme Colors */
+    :root {
+      --pale-cashmere: #E8DFD5;
+      --cinnamon-ice: #DBBBAA;
+      --burning-orange: #ff8543;
+      --blue-estate: #3B4883;
+      --wahoo: #272D4E;
+      --noble-black: #202124;
+      
+      /* Assign colors to UI elements */
+      --bg-color: var(--noble-black);
+      --text-color: var(--pale-cashmere);
+      --accent-color: var(--burning-orange);
+      --secondary-bg: rgba(59, 72, 131, 0.3); /* Blue Estate with transparency */
+      --tertiary-bg: rgba(39, 45, 78, 0.7); /* Wahoo with transparency */
+      --chat-bot: var(--blue-estate);
+      --chat-user: var(--burning-orange);
+    }
+    
+    /* Base Styles */
+    body { 
+      font-family: 'Roboto', 'Segoe UI', Arial, sans-serif; 
+      background: linear-gradient(to bottom, 
+        var(--noble-black) 0%, 
+        var(--wahoo) 33%, 
+        var(--blue-estate) 66%, 
+        var(--burning-orange) 100%);
+      background-attachment: fixed;
+      color: var(--text-color);
+      margin: 0;
+      padding: 20px;
+      transition: background-color 0.3s ease;
+      max-width: 800px;
+      margin: 0 auto;
+      min-height: 100vh;
+    }
+    
+    /* Chat UI */
+    .chat-container {
+      display: flex;
+      flex-direction: column;
+      height: calc(100vh - 140px);
+      overflow-y: auto;
+      padding: 20px;
+      background: rgba(32, 33, 36, 0.7);
+      border-radius: 12px;
+      margin-bottom: 20px;
+      scroll-behavior: smooth;
+      box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(219, 187, 170, 0.1);
+      backdrop-filter: blur(8px);
+    }
+    
+    .message {
+      max-width: 80%;
+      margin-bottom: 15px;
+      padding: 12px 16px;
+      border-radius: 18px;
+      animation: fadeIn 0.3s ease-in-out;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    
+    .bot-message {
+      background: linear-gradient(145deg, var(--blue-estate), #2a3766);
+      color: white;
+      align-self: flex-start;
+      border-bottom-left-radius: 5px;
+      margin-right: auto;
+    }
+    
+    .user-message {
+      background: linear-gradient(145deg, var(--burning-orange), #e05a0c);
+      color: white;
+      align-self: flex-end;
+      border-bottom-right-radius: 5px;
+      margin-left: auto;
+    }
+    
+    /* Input Area */
+    .input-area {
+      background: rgba(32, 33, 36, 0.85);
+      padding: 15px;
+      border-radius: 12px;
+      position: sticky;
+      bottom: 0;
+      box-shadow: 0 -4px 20px rgba(0, 0, 0, 0.3);
+      border: 1px solid rgba(255, 113, 36, 0.2);
+      backdrop-filter: blur(10px);
+    }
+    
+    input[type="text"] {
+      width: calc(100% - 120px);
+      padding: 12px 15px;
+      border-radius: 25px;
+      border: 1px solid rgba(255, 113, 36, 0.3);
+      background-color: rgba(232, 223, 213, 0.08);
+      color: white;
+      font-size: 16px;
+      box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+    
+    input[type="text"]:focus {
+      border-color: var(--burning-orange);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(255, 113, 36, 0.2);
+    }
+    
+    input[type="text"]::placeholder {
+      color: rgba(232, 223, 213, 0.5);
+    }
+    
+    button {
+      padding: 12px 20px;
+      background: linear-gradient(145deg, var(--burning-orange), #e05a0c);
+      color: white;
+      border: none;
+      border-radius: 25px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      margin-left: 10px;
+      font-weight: bold;
+      box-shadow: 0 4px 15px rgba(255, 113, 36, 0.3);
+    }
+    
+    button:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 20px rgba(255, 113, 36, 0.5);
+    }
+    
+    button:active {
+      transform: scale(0.98);
+    }
+    
+    /* Task styling in chat */
+    .task-in-chat {
+      background-color: rgba(232, 223, 213, 0.1);
+      border-radius: 8px;
+      padding: 10px 12px;
+      margin: 8px 0;
+      border-left: 3px solid var(--burning-orange);
+      transition: all 0.3s ease;
+    }
+    
+    .task-in-chat:hover {
+      background-color: rgba(232, 223, 213, 0.15);
+      transform: translateX(2px);
+    }
+    
+    .completed { 
+      text-decoration: line-through; 
+      opacity: 0.7;
+      border-left-color: rgba(255, 113, 36, 0.5);
+    }
+    
+    /* Improved task listing styles */
+    .task-list {
+      list-style-type: none;
+      padding: 0;
+      margin: 10px 0;
+    }
+
+    .task-list li {
+      padding: 8px 0;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .task-list li:last-child {
+      border-bottom: none;
+    }
+
+    /* Task table styling */
+    .task-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 10px 0;
+      font-size: 0.95em;
+      background-color: rgba(32, 33, 36, 0.4);
+      border-radius: 8px;
+      overflow: hidden;
+    }
+
+    .task-table th {
+      background-color: rgba(255, 113, 36, 0.3);
+      padding: 10px 8px;
+      text-align: left;
+      font-weight: bold;
+      color: var(--pale-cashmere);
+    }
+
+    .task-table td {
+      padding: 10px 8px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .task-table tr:last-child td {
+      border-bottom: none;
+    }
+    
+    .task-table tr.completed td {
+      text-decoration: line-through;
+      opacity: 0.7;
+    }
+    
+    .task-table tr:hover td {
+      background-color: rgba(255, 255, 255, 0.05);
+    }
+
+    /* Section styles for bot responses */
+    .response-section {
+      margin-bottom: 15px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .response-section h3 {
+      margin-top: 0;
+      margin-bottom: 10px;
+      color: var(--burning-orange);
+      font-size: 1.1em;
+      font-weight: 600;
+    }
+
+    .response-section:last-child {
+      border-bottom: none;
+      margin-bottom: 0;
+    }
+    
+    /* Animations */
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    h1 { 
+      color: var(--pale-cashmere); 
+      text-align: center;
+      font-size: 36px;
+      margin-bottom: 25px;
+      text-shadow: 2px 2px 8px rgba(0, 0, 0, 0.5);
+      letter-spacing: 1.5px;
+      font-weight: 900;
+      font-family: 'Montserrat', sans-serif;
+      position: relative;
+    }
+    
+    /* Bot Icon */
+    .bot-icon {
+      display: inline-block;
+      margin-right: 15px;
+      vertical-align: middle;
+      font-size: 32px;
+    }
+    
+    .bot-icon img {
+      width: 113px;
+      height: 113px;
+      vertical-align: middle;
+      object-fit: contain;
+      transition: transform 0.3s ease;
+    }
+    
+    .bot-icon img:hover {
+      transform: scale(1.1);
+    }
+    
+    code {
+      background-color: rgba(232, 223, 213, 0.1);
+      padding: 2px 5px;
+      border-radius: 4px;
+    }
+    
+    ul {
+      padding-left: 20px;
+    }
+    
+    .bot-thinking {
+      font-style: italic;
+      opacity: 0.7;
+      animation: pulse 1.5s infinite;
+    }
+    
+    @keyframes pulse {
+      0% { opacity: 0.4; }
+      50% { opacity: 0.8; }
+      100% { opacity: 0.4; }
+    }
+    
+    /* Additional styling for a more professional look */
+    .welcome-msg {
+      border-left: 4px solid var(--burning-orange);
+    }
+    
+    .timestamp {
+      font-size: 0.8em;
+      opacity: 0.7;
+      margin-top: 5px;
+      text-align: right;
+    }
+    
+    /* Custom scrollbar for chat container */
+    .chat-container::-webkit-scrollbar {
+      width: 6px;
+    }
+    
+    .chat-container::-webkit-scrollbar-track {
+      background: rgba(232, 223, 213, 0.05);
+      border-radius: 10px;
+    }
+    
+    .chat-container::-webkit-scrollbar-thumb {
+      background: rgba(255, 121, 49, 0.5);
+      border-radius: 10px;
+    }
+    
+    .chat-container::-webkit-scrollbar-thumb:hover {
+      background: rgba(254, 129, 61, 0.7);
+    }
+    
+    /* Highlight effects */
+    .highlight {
+      color: var(--burning-orange);
+      font-weight: bold;
+    }
