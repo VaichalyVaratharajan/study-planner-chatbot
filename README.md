@@ -1,4 +1,4 @@
-#   <img src="static/img/chatbot.png" alt="Study Planner Logo" width="24">  Study Planner Chatbot
+#   <img src="static/img/chatbot.png" alt="Study Planner Logo" width="32">  Study Planner Chatbot
 
 ![Study Planner Chatbot](https://img.shields.io/badge/Study-Planner-orange) ![License](https://img.shields.io/badge/License-MIT-blue) ![Python](https://img.shields.io/badge/Python-3.7+-brightgreen) ![Flask](https://img.shields.io/badge/Flask-2.0+-lightgrey)
 
